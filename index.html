@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pour Ma Reine 🌹</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@200;400;600&display=swap');
+
+        :root {
+            --rose-fluo: #ff007f;
+            --rose-pale: #ffc0cb;
+            --glass: rgba(255, 255, 255, 0.08);
+            --noir-profond: #050505;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: var(--noir-profond);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* --- BACKGROUND ANIMÉ --- */
+        .bg-circles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: linear-gradient(45deg, #050505, #1a010c);
+        }
+        .circle {
+            position: absolute; border-radius: 50%;
+            background: var(--rose-fluo); filter: blur(60px);
+            opacity: 0.15; animation: float 15s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -50px); }
+        }
+
+        /* --- ECRAN DE VERROUILLAGE --- */
+        #lock-screen {
+            position: fixed; inset: 0; z-index: 1000;
+            background: var(--noir-profond);
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px; transition: 0.8s;
+        }
+        .glass-input {
+            background: var(--glass); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 25px;
+            padding: 35px; text-align: center; width: 100%; max-width: 350px;
+        }
+        input#pin {
+            background: transparent; border: none; border-bottom: 2px solid var(--rose-fluo);
+            color: white; font-size: 1.8rem; width: 100%; text-align: center; outline: none; margin: 25px 0;
+            letter-spacing: 8px;
+        }
+        .unlock-btn {
+            background: var(--rose-fluo); border: none; padding: 12px 40px; 
+            color: white; border-radius: 50px; font-weight: bold; width: 100%; cursor: pointer;
+        }
+
+        /* --- CONTENU PRINCIPAL --- */
+        #main-content { display: none; width: 100%; padding: 15px; }
+
+        header { 
+            height: 85vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center; 
+        }
+        h1 { 
+            font-family: 'Dancing Script', cursive; font-size: 2.8rem; 
+            color: var(--rose-pale); text-shadow: 0 0 15px var(--rose-fluo);
+            line-height: 1.2;
+        }
+        .subtitle { font-size: 0.8rem; letter-spacing: 3px; margin-top: 15px; opacity: 0.8; }
+
+        /* --- SECTION VIDÉOS RESPONSIVE --- */
+        .video-grid {
+            display: grid; grid-template-columns: 1fr;
+            gap: 25px; margin: 40px 0;
+        }
+        @media (min-width: 768px) {
+            .video-grid { grid-template-columns: repeat(3, 1fr); }
+            h1 { font-size: 4.5rem; }
+        }
+        .video-card {
+            background: var(--glass); border-radius: 20px; padding: 12px;
+            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
+        }
+        .video-card:hover { border-color: var(--rose-fluo); }
+        .video-card h3 { 
+            font-size: 0.8rem; margin-bottom: 12px; color: var(--rose-pale); 
+            text-align: center; letter-spacing: 2px; font-weight: 400;
+        }
+        video { width: 100%; border-radius: 15px; background: black; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+
+        /* --- LA LETTRE --- */
+        .letter-section {
+            background: rgba(255, 192, 203, 0.03); padding: 30px;
+            border-radius: 25px; border: 1px dashed var(--rose-fluo);
+            line-height: 1.8; margin: 50px 0 100px 0; position: relative;
+        }
+        #typing-text { font-size: 1rem; color: #fdfdfd; white-space: pre-wrap; text-align: justify; }
+        .signature { margin-top: 30px; font-family: 'Dancing Script'; font-size: 2rem; color: var(--rose-fluo); text-align: right; }
+        .phrase-preferee { 
+            font-style: italic; font-size: 0.9rem; opacity: 0.7; 
+            margin-top: 50px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 25px; line-height: 1.5;
+        }
+        .heart-icon { text-align: center; margin-top: 25px; font-size: 2.5rem; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.2);} 100% {transform: scale(1);} }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-circles">
+        <div class="circle" style="width: 200px; height: 200px; top: 10%; left: -50px;"></div>
+        <div class="circle" style="width: 300px; height: 300px; bottom: 10%; right: -50px; animation-delay: -5s;"></div>
+    </div>
+
+    <div id="lock-screen">
+        <div class="glass-input">
+            <h2 style="font-weight: 200; font-size: 1.2rem; letter-spacing: 2px;">NOTRE SECRET</h2>
+            <input type="tel" id="pin" maxlength="6" placeholder="******">
+            <button class="unlock-btn" onclick="unlock()">DÉVERROUILLER MON CŒUR</button>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <header>
+            <h1>Happy Birthday<br>My Queen 🌹</h1>
+            <p class="subtitle">29.12.2025 | 02:40</p>
+            <p style="margin-top:20px; color: var(--rose-fluo); font-size: 0.75rem; font-weight: 600;">"Bonsoir tata s'il vous plaît avez vous la connexion ?"</p>
+        </header>
+
+        <section class="video-grid">
+            <div class="video-card">
+                <h3>POUR TOI, MON AMOUR</h3>
+                <video controls><source src="ma-video.mp4" type="video/mp4"></video>
+            </div>
+            <div class="video-card">
+                <h3>MESSAGE DE NOREEN 💖</h3>
+                <video controls><source src="noreen.mp4" type="video/mp4"></video>
+            </div>
+            <div class="video-card">
+                <h3>MESSAGE D'ASHLEY ✨</h3>
+                <video controls><source src="ashley.mp4" type="video/mp4"></video>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div id="typing-text"></div>
+            <div class="signature">Ton éternel...</div>
+            <p id="final-phrase" class="phrase-preferee" style="display:none;">
+                "Autant pour toi autant pour moi... est-ce que tu n'as pas raison ?"
+            </p>
+            <div class="heart-icon">❤️</div>
+        </section>
+
+        <audio id="bgMusic" loop>
+            <source src="perfect.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        const story = `Ma Reine,
+On dit que les plus belles histoires commencent souvent par un hasard, mais le nôtre était une collision d’âmes. Ce 29 décembre 2025, à 2h40, le monde s'est arrêté de tourner au festival WeLoveEya. Au milieu du chaos, mes yeux n'ont vu que toi. Ce contraste frappant entre ton ensemble noir et la clarté de ton teint... c'était une vision que je ne pouvais pas laisser s'échapper.
+
+J’ai dû inventer ce prétexte de "connexion" pour un appel, car au fond, c'est avec ton cœur que je voulais me connecter.
+
+Le chemin n'a pas été simple. Il y a eu ce silence, ce 30 décembre où tu m'as bloqué. Mais le 19 janvier à 01h42, je suis revenu, non pas par insistance, mais par certitude. Je savais que derrière tes gardes se cachait la femme de ma vie.
+
+Le 26 février, nos lèvres se sont rencontrées pour la première fois. Et le 1er mars à 02h02, tu as enfin accepté de lier ton destin au mien. Ma vie a changé de couleur pour devenir ce rose que tu aimes tant.
+
+Joyeux anniversaire. Tu es ma plus belle connexion, celle que je ne couperai jamais.`;
+
+        let i = 0;
+        function typeWriter() {
+            const container = document.getElementById("typing-text");
+            if (i < story.length) {
+                container.innerHTML += story.charAt(i);
+                i++;
+                // On accélère un peu la vitesse pour un texte long (40ms)
+                setTimeout(typeWriter, 40); 
+            } else {
+                document.getElementById("final-phrase").style.display = "block";
+                document.getElementById("final-phrase").style.animation = "fadeIn 2s";
+            }
+        }
+
+        function unlock() {
+            const val = document.getElementById("pin").value;
+            if(val === "070206") {
+                document.getElementById("lock-screen").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("lock-screen").style.display = "none";
+                    document.getElementById("main-content").style.display = "block";
+                    window.scrollTo(0, 0);
+                    const music = document.getElementById("bgMusic");
+                    music.volume = 0.4;
+                    music.play();
+                    typeWriter();
+                }, 800);
+            } else {
+                alert("Erreur de code... Pense à notre date spéciale.");
+            }
+        }
+    </script>
+</body>
+<footer style="text-align: center; padding: 40px 20px; margin-top: 50px; background: rgba(255, 255, 255, 0.03); border-top: 1px solid var(--rose-fluo);">
+    <p style="font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 20px; color: var(--rose-pale);">Besoin de ma voix ?</p>
+    
+    <a href="tel:+229XXXXXXXX" id="call-angel" style="
+        display: inline-block;
+        background: linear-gradient(45deg, var(--rose-fluo), #ff66b2);
+        color: white;
+        text-decoration: none;
+        padding: 15px 35px;
+        border-radius: 50px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+        transition: 0.3s;
+        font-family: 'Montserrat', sans-serif;
+    ">
+        📞 APPELLE TON ANGE
+    </a>
+
+    <p style="margin-top: 25px; font-size: 0.7rem; opacity: 0.5;">
+        © 2026 - À jamais avec toi.
+    </p>
+</footer>
+</html>
