@@ -270,43 +270,13 @@
                 s'il vous plaît avez vous la connexion pour que je puisse effectué un appel?"</p>
         </header>
 
-        <section id="video-selection" class="video-grid">
-            <div class="video-card" onclick="showVideo('angel')">
-                <div class="gift-icon">🎁</div>
-                <h3>UN MESSAGE DE TON ANGE</h3>
-                <p>Clique pour ouvrir...</p>
-            </div>
-            <div class="video-card" onclick="showVideo('noreen')">
-                <div class="gift-icon">🎀</div>
-                <h3>MESSAGE DE NOREEN</h3>
-                <p>Ta bestie a un mot pour toi...</p>
-            </div>
-            <div class="video-card" onclick="showVideo('ashley')">
-                <div class="gift-icon">✨</div>
-                <h3>MESSAGE D'ASHLEY</h3>
-                <p>Regarde ce qu'elle te dit...</p>
-            </div>
-        </section>
 
-        <div id="video-player-overlay"
-            style="display:none; position:fixed; inset:0; background:black; z-index:2000; flex-direction:column; align-items:center; justify-content:center; padding:20px;">
-            <button onclick="closeVideo()"
-                style="position:absolute; top:20px; right:20px; background:var(--rose-fluo); border:none; color:white; padding:10px 20px; border-radius:50px; cursor:pointer; font-weight:bold;">✖
-                FERMER</button>
-
-            <h2 id="video-title"
-                style="font-family:'Dancing Script'; color:var(--rose-pale); margin-bottom:20px; font-size:2rem;"></h2>
-
-            <video id="fullscreen-video" controls playsinline webkit-playsinline
-                style="width:100%; max-height:70vh; border-radius:15px; box-shadow: 0 0 30px var(--rose-fluo);">
-                <source src="" type="video/mp4">
-            </video>
-        </div>
 
         <style>
             /* Style des cartes cadeaux */
             .video-grid {
-                display: grid;
+                display: none;
+                /* Caché au départ */
                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
                 gap: 20px;
                 margin: 40px 0;
@@ -395,6 +365,38 @@
             </p>
             <div class="heart-icon">❤️</div>
         </section>
+        <section id="video-selection" class="video-grid">
+            <div class="video-card" onclick="showVideo('angel')">
+                <div class="gift-icon">🎁</div>
+                <h3>UN MESSAGE DE TON ANGE</h3>
+                <p>Clique pour ouvrir...</p>
+            </div>
+            <div class="video-card" onclick="showVideo('noreen')">
+                <div class="gift-icon">🎀</div>
+                <h3>MESSAGE DE NOREEN</h3>
+                <p>Une best a un mot pour toi...</p>
+            </div>
+            <div class="video-card" onclick="showVideo('ashley')">
+                <div class="gift-icon">✨</div>
+                <h3>MESSAGE D'ASHLEY</h3>
+                <p>Une best a un mot pour toi...</p>
+            </div>
+        </section>
+
+        <div id="video-player-overlay"
+            style="display:none; position:fixed; inset:0; background:black; z-index:2000; flex-direction:column; align-items:center; justify-content:center; padding:20px;">
+            <button onclick="closeVideo()"
+                style="position:absolute; top:20px; right:20px; background:var(--rose-fluo); border:none; color:white; padding:10px 20px; border-radius:50px; cursor:pointer; font-weight:bold;">✖
+                FERMER</button>
+
+            <h2 id="video-title"
+                style="font-family:'Dancing Script'; color:var(--rose-pale); margin-bottom:20px; font-size:2rem;"></h2>
+
+            <video id="fullscreen-video" controls playsinline webkit-playsinline
+                style="width:100%; max-height:70vh; border-radius:15px; box-shadow: 0 0 30px var(--rose-fluo);">
+                <source src="" type="video/mp4">
+            </video>
+        </div>
 
         <audio id="bgMusic" loop playsinline>
             <source src="perfect.mp3" type="audio/mpeg">
@@ -419,11 +421,21 @@ Joyeux anniversaire. Tu es ma plus belle connexion, celle que je ne couperai jam
             if (i < story.length) {
                 container.innerHTML += story.charAt(i);
                 i++;
-                // On accélère un peu la vitesse pour un texte long (40ms)
                 setTimeout(typeWriter, 40);
             } else {
+                // LE TEXTE EST FINI : On affiche les cadeaux et la phrase finale
                 document.getElementById("final-phrase").style.display = "block";
-                document.getElementById("final-phrase").style.animation = "fadeIn 2s";
+
+                // On fait apparaître la grille de vidéos avec un bel effet
+                const grid = document.getElementById("video-selection");
+                grid.style.display = "grid";
+                grid.style.animation = "fadeIn 2s"; // Petit effet de fondu
+
+                // On scrolle doucement vers les vidéos pour lui montrer qu'il y a du nouveau
+                window.scrollTo({
+                    top: grid.offsetTop,
+                    behavior: 'smooth'
+                });
             }
         }
 
