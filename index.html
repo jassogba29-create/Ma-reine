@@ -132,24 +132,83 @@
         <header>
             <h1>Happy Birthday<br>My Queen 🌹</h1>
             <p class="subtitle">29.12.2025 | 02:40</p>
-            <p style="margin-top:20px; color: var(--rose-fluo); font-size: 0.75rem; font-weight: 600;">"Bonsoir tata s'il vous plaît avez vous la connexion ?"</p>
+            <p style="margin-top:20px; color: var(--rose-fluo); font-size: 0.75rem; font-weight: 600;">"Bonsoir tata s'il vous plaît avez vous la connexion pour que je puisse effectué un appel?"</p>
         </header>
 
-        <section class="video-grid">
-            <div class="video-card">
-                <h3>POUR TOI, MON AMOUR</h3>
-                <video controls><source src="ma-video.mp4" type="video/mp4"></video>
-            </div>
-            <div class="video-card">
-                <h3>MESSAGE DE NOREEN 💖</h3>
-                <video controls><source src="noreen.mp4" type="video/mp4"></video>
-            </div>
-            <div class="video-card">
-                <h3>MESSAGE D'ASHLEY ✨</h3>
-                <video controls><source src="ashley.mp4" type="video/mp4"></video>
-            </div>
-        </section>
+        <section id="video-selection" class="video-grid">
+    <div class="video-card" onclick="showVideo('angel')">
+        <div class="gift-icon">🎁</div>
+        <h3>UN MESSAGE DE TON ANGE</h3>
+        <p>Clique pour ouvrir...</p>
+    </div>
+    <div class="video-card" onclick="showVideo('noreen')">
+        <div class="gift-icon">🎀</div>
+        <h3>MESSAGE DE NOREEN</h3>
+        <p>Ta bestie a un mot pour toi...</p>
+    </div>
+    <div class="video-card" onclick="showVideo('ashley')">
+        <div class="gift-icon">✨</div>
+        <h3>MESSAGE D'ASHLEY</h3>
+        <p>Regarde ce qu'elle te dit...</p>
+    </div>
+</section>
 
+<div id="video-player-overlay" style="display:none; position:fixed; inset:0; background:black; z-index:2000; flex-direction:column; align-items:center; justify-content:center; padding:20px;">
+    <button onclick="closeVideo()" style="position:absolute; top:20px; right:20px; background:var(--rose-fluo); border:none; color:white; padding:10px 20px; border-radius:50px; cursor:pointer; font-weight:bold;">✖ FERMER</button>
+    
+    <h2 id="video-title" style="font-family:'Dancing Script'; color:var(--rose-pale); margin-bottom:20px; font-size:2rem;"></h2>
+    
+    <video id="fullscreen-video" controls style="width:100%; max-height:70vh; border-radius:15px; box-shadow: 0 0 30px var(--rose-fluo);">
+        <source src="" type="video/mp4">
+    </video>
+</div>
+
+<style>
+    /* Style des cartes cadeaux */
+    .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 40px 0; }
+    .video-card { 
+        background: var(--glass); border: 2px solid var(--rose-fluo); border-radius: 20px; 
+        padding: 30px; cursor: pointer; transition: 0.4s; text-align: center;
+    }
+    .video-card:hover { transform: scale(1.05); background: rgba(255, 0, 127, 0.1); }
+    .gift-icon { font-size: 3rem; margin-bottom: 15px; }
+    .video-card p { font-size: 0.8rem; opacity: 0.7; margin-top: 10px; }
+</style>
+
+<script>
+    // Configuration des vidéos
+    const videoData = {
+        'angel': { title: "Un message de ton Ange 🌹", src: "ma-video.mp4" },
+        'noreen': { title: "Le mot de Noreen 💖", src: "noreen.mp4" },
+        'ashley': { title: "Le mot d'Ashley ✨", src: "ashley.mp4" }
+    };
+
+    function showVideo(person) {
+        const data = videoData[person];
+        const overlay = document.getElementById('video-player-overlay');
+        const videoTag = document.getElementById('fullscreen-video');
+        
+        document.getElementById('video-title').innerText = data.title;
+        videoTag.src = data.src;
+        
+        overlay.style.display = 'flex';
+        videoTag.play();
+        
+        // On baisse la musique de fond pour entendre la vidéo
+        document.getElementById('bgMusic').volume = 0.01;
+    }
+
+    function closeVideo() {
+        const overlay = document.getElementById('video-player-overlay');
+        const videoTag = document.getElementById('fullscreen-video');
+        
+        videoTag.pause();
+        overlay.style.display = 'none';
+        
+        // On remet la musique de fond
+        document.getElementById('bgMusic').volume = 0.4;
+    }
+</script>
         <section class="letter-section">
             <div id="typing-text"></div>
             <div class="signature">Ton éternel...</div>
