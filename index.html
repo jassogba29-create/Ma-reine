@@ -365,12 +365,26 @@
             function closeVideo() {
                 const overlay = document.getElementById('video-player-overlay');
                 const videoTag = document.getElementById('fullscreen-video');
+                const music = document.getElementById('bgMusic');
 
+                // 1. On coupe la vidéo et on vide la source pour le mobile
                 videoTag.pause();
+                videoTag.src = "";
+
+                // 2. On cache l'écran noir
                 overlay.style.display = 'none';
 
-                // On remet la musique de fond
-                document.getElementById('bgMusic').volume = 0.4;
+                // 3. LE FIX MAGIQUE POUR MOBILE :
+                music.volume = 0.4; // On remet le volume
+
+                // On force le téléphone à relancer la musique qui était en pause forcée
+                music.play().catch(error => {
+                    console.log("Le navigateur bloque encore, on attend un clic.");
+                    // Si l'iPhone bloque, on relance au premier toucher d'écran
+                    document.addEventListener('touchstart', function () {
+                        music.play();
+                    }, { once: true });
+                });
             }
         </script>
         <section class="letter-section">
@@ -382,7 +396,7 @@
             <div class="heart-icon">❤️</div>
         </section>
 
-        <audio id="bgMusic" loop>
+        <audio id="bgMusic" loop playsinline>
             <source src="perfect.mp3" type="audio/mpeg">
         </audio>
     </div>
