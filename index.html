@@ -277,7 +277,7 @@
             .video-grid {
                 display: none;
                 /* Caché au départ */
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 20px;
                 margin: 40px 0;
             }
@@ -314,7 +314,10 @@
             const videoData = {
                 'angel': { title: "Un message de ton Ange 🌹", src: "ma-video.mp4" },
                 'noreen': { title: "Le mot de Noreen 💖", src: "noreen.mp4" },
-                'ashley': { title: "Le mot d'Ashley ✨", src: "ashley.mp4" }
+                'ashley': { title: "Le mot d'Ashley ✨", src: "ashley.mp4" },
+                'siracide': { title: "Le mot de Siracide 🌸", src: "siracide.mp4" }
+
+
             };
 
             function showVideo(person) {
@@ -379,6 +382,11 @@
             <div class="video-card" onclick="showVideo('ashley')">
                 <div class="gift-icon">✨</div>
                 <h3>MESSAGE D'ASHLEY</h3>
+                <p>Une best a un mot pour toi...</p>
+            </div>
+            <div class="video-card" onclick="showVideo('siracide')">
+                <div class="gift-icon">🌸</div>
+                <h3>MESSAGE DE SIRACIDE</h3>
                 <p>Une best a un mot pour toi...</p>
             </div>
         </section>
